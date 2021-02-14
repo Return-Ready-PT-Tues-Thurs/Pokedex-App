@@ -14,9 +14,16 @@ app.set("view engine", "ejs");
 // This middleware is used to tell app that our data will be in JSON format.
 app.use(express.json());
 
+app.use(express.static('public'))
+app.use('/css', express.static(__dirname + 'public/css'))
+// app.get('', (req, res) => {
+//   res.send(__dirname + '/views/allPokemon.html')
+
+// });
+
 // This will be our root route
 app.get("/", (req, res) => {
-// the response is converted to json and our two routes are define in an array.
+// the response is converted to json and our two routes are defined in an array. All Pokemon are in the 1st route and pokemon by id is the second route
   res.json({
     routes: [
       {
@@ -40,7 +47,7 @@ app.get("/pokemons", async (req, res) => {
   // easier than fetch()
 
   await axios
-    .get("https://pokeapi.co/api/v2/pokemon") // we are getting the data from this api and setting it to var apidData.
+    .get("https://pokeapi.co/api/v2/pokemon") // we are getting the data from this api and setting it to the var apidData.
     .then((data) => (apiData = data.data));
 
   // pushing name of each pokemon to the array
@@ -53,7 +60,7 @@ app.get("/pokemons", async (req, res) => {
   res.render("pokemons", { pokemons: pokemonArray });
 });
 
-// :id creates a dynamic url, we the id in the params later.
+// :id creates a dynamic url, we define the id in the parameters in below function.
 app.get("/:id", async (req, res) => {
   let apiData;
 
@@ -69,9 +76,9 @@ app.get("/:id", async (req, res) => {
 
   try {
     await axios
-      .get("https://pokeapi.co/api/v2/pokemon/" + id)
+      .get("https://pokeapi.co/api/v2/pokemon/" + id) // initial response will only be 20 pokemon. The ID can be enter to see additional pokemon
       .then((data) => (apiData = data.data));
-    //connecting the pokemon with its id, name, image, and type.
+    //connecting the pokemon id, name, img, and type with its data for id, name, image, and type.
     pokemon.id = apiData.id;
     pokemon.name = apiData.name;
     pokemon.img = apiData.sprites.other["official-artwork"]["front_default"];
@@ -83,7 +90,7 @@ app.get("/:id", async (req, res) => {
   }
 });
 
-// The server will run on the which we'll pass here.
+// The server will run on the port which we'll pass here.
 // The server can be started with 'npm start' in the terminal
 app.listen(8000, () => {
   console.log(`Listening to 8000`);
