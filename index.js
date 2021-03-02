@@ -3,33 +3,6 @@
 const express = require("express");
 const app = express(); //initializes express app
 
-// To connect to the database, you must create a Sequelize instance. 
-// This can be done by either passing the connection parameters separately to the Sequelize constructor or by passing a single connection URI
-const Sequelize = require('sequelize');		
-
-// const sequelize = new Sequelize('mysql://user:Azeez:3306/pokedex', {
-//   host: 'localhost',
-//   dialect: 'mysql'
-// });
-
-// (async () => {
-//     try {
-//     await sequelize.authenticate();
-//      console.log('Connection to the database successful!');
-// } catch (error) {
-//   	 console.error('Error connecting to the database: ', error);
-// }
-// })
-// ();
-
-
-const sequelize = new Sequelize('pokedex', 'root', '@Elle1261', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
-
-sequelize.query('show tables').then(console.log)
-
 // axios is for making api/ajax requests.
 const axios = require("axios");
 // ejs is our view engine. We're using EJS because we have to pass data to our frontend templates
