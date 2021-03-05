@@ -10,7 +10,7 @@ const express = require('express')
 let con = mysql = mysql.createConnection({
     host:"localhost",
     user: "root",
-    password: "Psychopathic1",
+    password: " ",
     database:"pokedex"
 })
 
